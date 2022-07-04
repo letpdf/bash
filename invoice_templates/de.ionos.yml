@@ -1,0 +1,17 @@
+issuer: IONOS
+fields:
+  amount: zahlenderBetrag([\d ]+,\d{2})
+  date: Rechnungsdatum:(\d{2}.\d{2}.\d{4})
+  invoice_number: Rechnungsnummer:(\d{1,12})
+keywords:
+ - 1&1IONOSSE
+ - Rechnung
+options:
+  remove_whitespace: true
+  currency: EUR
+  date_formats:
+    - '%d.%m.%Y'
+  decimal_separator: ','
+  replace:
+    - [ '$', 'USD' ]
+    - [ '€', 'EUR' ]

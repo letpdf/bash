@@ -1,0 +1,103 @@
+#!/bin/bash
+
+# USAGE
+#./invoice.sh INPUT_FOLDER CHECK_IN_FOLDER_YEAR COMPANY
+#./invoice.sh ionos_2020 2020 ionos
+#./invoice_check.sh mserwis 2020 mserwis
+#./invoice_check.sh strato2020 2020 strato
+#./invoice_check.sh strato2021 2021 strato
+#./invoice_check.sh strato2021/done 2021 strato
+#./invoice.sh mserwis 2020 mserwis
+
+# DEFAULT
+NAME=$(basename "$0")
+NAME=${NAME/.sh/}
+#
+FTIME="$(date +%s)"
+LOGS_FOLDER="${NAME}/.logs"
+mkdir -p $LOGS_FOLDER
+LOGS="${LOGS_FOLDER}/${FTIME}.txt"
+#[ ! -f "${LOGS}" ] &&
+echo -n "" > $LOGS
+
+#
+SUBMODULE=invoice
+FOLDER_IN="${SUBMODULE}/in"
+FOLDER_OUT="${SUBMODULE}/out"
+
+## PARAMS
+FOLDER=$1
+[ -z "$FOLDER" ] && echo "!!! FOLDER empty" >>$LOGS && cat $LOGS && exit
+
+FOLDER_YEAR=$2
+[ -z "$FOLDER_YEAR" ] && echo "!!! YEAR FOLDER empty" >>$LOGS && cat $LOGS && exit
+
+COMPANY=$3
+[ -z "$COMPANY" ] && echo "!!! COMPANY FOLDER empty" >>$LOGS && cat $LOGS && exit
+
+## PREPARE
+mkdir -p $FOLDER_IN
+mkdir -p $FOLDER_OUT
+echo "INPUT:"
+
+# START
+CHECK="$FOLDER_IN/$FOLDER"
+## FIND only ended on pdf
+LIST=$(ls ${CHECK} | grep -E 'pdf$')
+for FILENAME in $LIST; do
+  echo "$FILENAME"
+  #exit
+  FILE_PATH="${CHECK}/${FILENAME}"
+  [ ! -f ${FILE_PATH} ] && continue
+
+  echo "$FILE_PATH" >>$LOGS
+  echo "PATH: [$FOLDER] FILE: [$FILENAME] TO [$FOLDER_YEAR] COMPANY [$COMPANY]"
+
+  #CHECK_FOLDER="${FOLDER_YEAR}/${FILENAME}"
+
+  # check if file exist in year
+  #RESULT=$(find $FOLDER_YEAR -name "$FILENAME" -type f)
+  if [ $(find $FOLDER_YEAR -name "$FILENAME" -type f | wc -l) -gt 0 ]; then
+    #cp $FILE_PATH $FOLDER_YEAR && echo "COPIED: [$FILE_PATH] TO [$FOLDER_YEAR]" >>$LOGS
+    echo "FOUND: [$FILENAME]  IN [$FOLDER_YEAR]" >>$LOGS
+    TARGET=$FOLDER_DUPLICATED
+    JPG_FILE="${FILE_PATH}0.jpg"
+    TXT_FILE="${JPG_FILE}.txt"
+    DATE_FILE="${JPG_FILE}.date"
+  #if exist or move to duplicated
+
+  else
+    echo "NOT FOUND: [$FILENAME]  IN [$FOLDER_YEAR]" >>$LOGS
+    #Check OCR
+    ## prepare image and extract string
+    #RESULT=$(python3 pdf2jpg.py $FILE_PATH)
+    python3 pdf2jpg.py $FILE_PATH
+    #python3 jpg2txt.py invoice/in/ionos_2020/RG_100080295635.pdf0.jpg
+    #./extract.sh in/ionos_2020/RG_100080295635.pdf0.jpg.txt
+    #./extract.php.sh in/ionos_2020/RG_100080295635.pdf0.jpg.txt
+    #php extract.php in/ionos_2020/RG_100080295635.pdf0.jpg.txt
+
+    JPG_FILE="${FILE_PATH}0.jpg"
+    #echo $JPG_FILE
+    python3 jpg2txt.py $JPG_FILE
+    #RESULT=$(python3 jpg2txt.py $FILE_PATH)
+    #sleep 1
+    TXT_FILE="${JPG_FILE}.txt"
+    #DATE_FILE="${FILE_PATH}0.jpg.my"
+    DATE_VAL=$(php invoice_date.php $TXT_FILE)
+    DATE_FILE="${JPG_FILE}.date"
+    echo -n "$DATE_VAL" > $DATE_FILE
+    #Find Month
+    FOLDER_MONTH=$(php invoice_my.php $TXT_FILE)
+    echo "$FOLDER_MONTH"
+    # Move to the Month
+    TARGET="$FOLDER_YEAR/$FOLDER_MONTH/$COMPANY"
+    echo $TARGET
+    #exit
+  fi
+
+done
+
+echo ""
+echo "OUTPUT:"
+cat $LOGS

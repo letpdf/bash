@@ -1,0 +1,20 @@
+# -*- coding: utf-8 -*-
+issuer: premium.pl Sp. z o.o.
+keywords:
+  - MSERWIS
+  - Poland
+  - PL8971849179
+fields:
+  date: issue\)\:(\d{4}-\d{2}-\d{2})
+  sale_date: issue\)\:(\d{4}-\d{2}-\d{2})
+  invoice_number: invoice\)(SPK\/\d{4}\/\d{1}\/\d{4})
+  amount: amount\)\:([\d]+,\d{1,3})PLN
+  amount_untaxed: Total\:(\d+,\d{1,3})PLN
+  static_vat: PL8971849179
+options:
+  currency: PLN
+  date_formats:
+    - '%Y-%m-%d'
+  decimal_separator: ','
+  remove_whitespace: true
+

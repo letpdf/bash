@@ -1,0 +1,16 @@
+# -*- coding: utf-8 -*-
+issuer: premium.pl Sp. z o.o.
+keywords:
+  - premium.pl
+  - Szczecin
+  - PL5213584915
+fields:
+  date: Data\swystawienia:\s(\d{4}-\d{2}-\d{2})
+  invoice_number: Invoice\s(\d{3}\/\w{1}\/\d{2}\/\d{4})
+  amount: due:\s(\d{1,4},\d{2})
+options:
+  remove_whitespace: false
+  currency: PLN
+  date_formats:
+    - '%Y-%m-%d'
+  decimal_separator: ','

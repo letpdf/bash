@@ -1,0 +1,19 @@
+# -*- coding: utf-8 -*-
+issuer: ABC Consultancy services
+keywords:
+- ABC Consultancy services
+- Manasa Agency
+
+fields:
+    amount: TOTAL DUE BY DATE\s+(\d+)
+    #date: ^DATE \d{2}-[a-zA-Z]{3}-\d{4}$
+    date: DATE\s+(\d{1,2}\-[A-Z]{3}\-\d{2,4})
+    invoice_number: INVOICE\s+\d{6}
+options:
+    remove_whitespace: false
+    currency: INR 
+    date_formats:
+        - '%d/%m/%Y'
+    languages :
+        - en
+    

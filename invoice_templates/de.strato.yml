@@ -1,0 +1,18 @@
+issuer: STRATO
+fields:
+  amount: RechnungsbetragEUR(\d{1,10},\d{2})
+  date: vom(\d{2}.\d{2}.\d{4})
+  subscription_date: vom(\d{2}.\d{2}.\d{4})bis
+  invoice_number: Rechnungsnummer:(\w{1,4}\d{1,11})
+keywords:
+ - STRATO
+ - Rechnung
+options:
+  remove_whitespace: true
+  currency: EUR
+  date_formats:
+    - '%d.%m.%Y'
+  decimal_separator: ','
+  replace:
+    - [ '$', 'USD' ]
+    - [ '€', 'EUR' ]

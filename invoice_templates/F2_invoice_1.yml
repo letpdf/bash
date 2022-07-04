@@ -1,0 +1,19 @@
+# -*- coding: utf-8 -*-
+issuer: Nada Company
+keywords:
+- Nada Company
+
+
+fields:
+    amount: Total\s+(\d+)
+    #date: ^DATE \d{2}-[a-zA-Z]{3}-\d{4}$
+    date: Date:\s(\d{1,2}\-[A-z][a-z]{2}\-\d{2,4})
+    invoice_number: INVOICE\s+:+\s+\d{7}
+options:
+    remove_whitespace: false
+    currency: USD 
+    date_formats:
+        - '%d/%m/%Y'
+    languages :
+        - en
+    
