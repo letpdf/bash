@@ -1,3 +1,4 @@
+*.pdf
 invoice_check/.logs
 ocr_folder.log.txt
 .idea

@@ -1,0 +1,22 @@
+# -*- coding: utf-8 -*-
+issuer: OVHcloud
+fields:
+  amount: total\s+.+([\d ]+.\d{2})
+  amount_untaxed: ex\.\sVAT\s+.+([\d]+.\d{2})
+  date: date:\s(\d{2}\/\d{2}\/\d{4})
+  invoice_number: Invoice\s+.+(IE\w+)
+  static_vat: EE102146710
+keywords:
+  - EE102146710
+  - Invoice
+  - ovh
+  - €
+options:
+  currency: €
+  languages:
+    - en
+  decimal_separator: '.'
+  remove_whitespace: false
+  replace:
+    - [ '$', 'USD' ]
+    - [ '€', 'EUR' ]

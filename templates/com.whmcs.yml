@@ -1,0 +1,20 @@
+# -*- coding: utf-8 -*-
+issuer: WHMCS Limited
+fields:
+  amount: Total\$([\d ]+.\d{2})
+  date: Date:(\d{2}\w{2,4}\d{4})
+  invoice_number: Invoice(\#\d{4,7})
+keywords:
+  - WHMCSLimited
+  - Invoice
+  - $
+options:
+  currency: $
+  languages:
+    - en
+  decimal_separator: '.'
+  remove_whitespace: true
+  replace:
+    - [ '$', 'USD' ]
+    - [ '€', 'EUR' ]
+    - [ 'th', '' ]

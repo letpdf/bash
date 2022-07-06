@@ -1,0 +1,9 @@
+issuer: Envato
+fields:
+  amount: InvoiceTotal:\$(\d+.\d{2})
+  amount_untaxed: InvoiceTotal:\$(\d+.\d{2})
+  date: Orderdate:(\d+\w+\d+)
+  invoice_number: InvoiceNo.(\d+)
+  partner_name: (Envato)
+keywords:
+- Envato

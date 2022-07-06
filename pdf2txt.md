@@ -59,3 +59,8 @@ python3 pdf2txt.py "/media/tom/projects/softreck-invoices/2020/01.2020/ionos/"
 
 python3 pdf2txt.py "/media/tom/projects/softreck-invoices/2020/12.2020/ionos/RG_100081390203.pdf"
 python3 pdfs2txt.py "/media/tom/projects/softreck-invoices/2020/01.2020/ionos/"
+
+cd /media/tom/projects/letpdf/bash
+python3 -m pip install -r requirements.txt
+python3 pdf2txt.py RG_100068630897.pdf
+python pdf2txt.py RG_100068630897.pdf

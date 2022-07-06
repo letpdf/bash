@@ -19,26 +19,25 @@ else:
     pathname = input('pdf file path>>> ')
 
 try:
-    templates = read_templates("invoice_templates/")
+    templates = read_templates("./templates/")
 
-    #if pathname.endswith(".pdf"):
     if os.path.exists(pathname):
         print("EXIST")
     else:
         print("NOT EXIST")
 
-    if pathname.endswith(".pdf") and allowed_file(pathname):
+    if allowed_file(pathname):
         print(pathname)
         #print(type(pathname))
         #print(type(templates))
         #print(read_template)
         #path_filename.append(pathname)
-        result = extract_data(pathname, templates=templates)
+        #result = extract_data(pathname)
+        result = extract_data(pathname, templates)
+        print(result)
 
         if (not result):
             print('This PDF is currently not supported please make sure that you are using a orignal statment.')
-
-        exit()
 
         result['date']=result['date'].strftime("%d.%m.%Y")
 
