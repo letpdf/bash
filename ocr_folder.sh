@@ -29,13 +29,16 @@ for FOLDER in $FOLDER_LIST; do
   for FILENAME in $LIST; do
 
     #echo $FILENAME
-    FILE_IN="${FOLDER}${FILENAME}/"
-    echo $FILE_IN
+    #FILE_IN="${FOLDER}${FILENAME}/"
+    echo ""
+    #echo $FILE_IN
+    echo $FILENAME
+    echo ""
 
     #FILE_OUT="${FOLDER}/${FILENAME}.txt"
     #echo $FILE_OUT
 
-    python3 pdf2txt.py "$FILE_IN"
+    python3 pdf2txt.py "$FILENAME"
     #python3 pdf2txt.py "$FILENAME"
     #exit
     #continue

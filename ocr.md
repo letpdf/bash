@@ -9,6 +9,6 @@
 
 ./ocr_folder.sh
 
-./ocr_folder.sh "2020/*/strato"
-./ocr_folder.sh "2020/*/*/*.pdf"
-./ocr_folder.sh "2020/*/"
+./ocr_folder.sh "/media/tom/projects/softreck-invoices/2020/*/strato"
+./ocr_folder.sh "/media/tom/projects/softreck-invoices/2020/*/*/*.pdf"
+./ocr_folder.sh "/media/tom/projects/softreck-invoices/2020/*/"

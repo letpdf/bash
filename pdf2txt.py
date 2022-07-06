@@ -1,33 +1,43 @@
-import cv2
-import pytesseract
-import numpy as np
 from sys import argv
 from invoice2data import extract_data
 from invoice2data.extract.loader import read_templates
-import yaml
-import glob
-import errno
-import os
-import pymongo
-# Import Python json module
 import json
+import os
+
+ALLOWED_EXTENSIONS = set(['pdf'])
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+def currency_data_to_float(ammount):
+    return float(ammount.replace(',', '').replace('$', ''))
 
 if len(argv) > 1:
-    pdf_path = argv[1]
+    pathname = argv[1]
 else:
-    pdf_path = input('pdf file path>>> ')
+    pathname = input('pdf file path>>> ')
 
 try:
-    # Store Pdf with convert_from_path function
-    print(pdf_path)
-    read_template = read_templates(folder="invoice_templates")
+    templates = read_templates("invoice_templates/")
 
-    if pdf_path.endswith(".pdf"):
-        pathname = pdf_path;
+    #if pathname.endswith(".pdf"):
+    if os.path.exists(pathname):
+        print("EXIST")
+    else:
+        print("NOT EXIST")
+
+    if pathname.endswith(".pdf") and allowed_file(pathname):
         print(pathname)
+        #print(type(pathname))
+        #print(type(templates))
+        #print(read_template)
         #path_filename.append(pathname)
-        result = extract_data(pathname, read_template)
-        print(result)
+        result = extract_data(pathname, templates=templates)
+
+        if (not result):
+            print('This PDF is currently not supported please make sure that you are using a orignal statment.')
+
         exit()
 
         result['date']=result['date'].strftime("%d.%m.%Y")
@@ -62,13 +72,6 @@ try:
                 currency=currency.replace("€", "EUR" )
                 currency=currency.replace("$", "USD" )
                 file.write(currency)
-
-#image = cv2.imread(jpg_path)
-#custom_config = r'--oem 3 --psm 6'
-#txt_content = (pytesseract.image_to_string(image, config=custom_config))
-#with open(jpg_path + ".txt", 'w') as file:
-#    file.write(txt_content)
-
 
 except FileNotFoundError:
     print(f'{argv[1]} not found')
