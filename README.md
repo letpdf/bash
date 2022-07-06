@@ -1,5 +1,13 @@
 # bash bash.letpdf.com
 
++ invoice
++ invoice_date
++ jpg2text
++ ocr
++ ocr_file
++ ocr_folder
++ pdf2jpg
++ pdf2txt
 
 # Invoice2textdata
 PDFs are extremely difficult to scrape. Converting them to text files can make extracting their data significantly easier. I have focused on the widely used pdfminer package from python.

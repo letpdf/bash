@@ -62,6 +62,9 @@ try:
                 with open(pathname + ".price", 'w') as file:
                     file.write(str(result['amount']))
 
+                with open(pathname + ".number", 'w') as file:
+                    file.write(str(result['invoice_number']))
+
                 with open(pathname + ".currency", 'w') as file:
                     currency=str(result['currency'])
                     currency=currency.replace("€", "EUR" )
