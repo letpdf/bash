@@ -36,9 +36,7 @@ else:
 try:
     templates = read_templates("./templates/")
 
-    if os.path.exists(pathname):
-        print("EXIST")
-    else:
+    if not os.path.exists(pathname):
         print("NOT EXIST")
         exit()
 
