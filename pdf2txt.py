@@ -21,12 +21,37 @@ datetime(2020, 1, 1, tzinfo=NYC)
 ALLOWED_EXTENSIONS = set(['pdf'])
 DATE_FORMAT = "%d.%m.%Y"
 
+
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 def currency_data_to_float(ammount):
     return float(ammount.replace(',', '').replace('$', ''))
+
+
+def getDate(input):
+    if type(input) is list:
+        return input[0].strftime(DATE_FORMAT)
+    return input.strftime(DATE_FORMAT)
+
+
+def exchangeDate(array, key):
+    if key in array:
+        print(type(array[key]))
+        if type(array[key]) is list:
+            array[key] = array[key][0].strftime(DATE_FORMAT)
+        else:
+            array[key] = array[key].strftime(DATE_FORMAT)
+    return array
+
+def getCurrency(input):
+    print(type(input))
+    currency = str(input)
+    currency = currency.replace("€", "EUR")
+    currency = currency.replace("$", "USD")
+    return currency
+
 
 if len(argv) > 1:
     pathname = argv[1]
@@ -41,34 +66,34 @@ try:
         exit()
 
     if allowed_file(pathname):
-        #print(pathname)
-        #print(type(pathname))
-        #print(type(templates))
-        #print(read_template)
-        #path_filename.append(pathname)
-        #result = extract_data(pathname)
+        # print(pathname)
+        # print(type(pathname))
+        # print(type(templates))
+        # print(read_template)
+        # path_filename.append(pathname)
+        # result = extract_data(pathname)
 
         result = extract_data(pathname, templates)
-        #stz = get_localzone()
-        #date_obj = date_obj.replace(tzinfo=stz)
+        # stz = get_localzone()
+        # date_obj = date_obj.replace(tzinfo=stz)
 
-        #if (not result):
-        if (result==False):
+        # if (not result):
+        if (result == False):
             print('This PDF is currently not supported please make sure that you are using a orignal statment.')
             exit()
 
-        result['date']=result['date'].strftime(DATE_FORMAT)
+        # result['date']=result['date'].strftime(DATE_FORMAT)
+        #result['date'] = getDate(result['date'])
+        result = exchangeDate(result, 'date')
 
-        if "sale_date" in result:
-            result['sale_date']=result['sale_date'].strftime(DATE_FORMAT)
+        #result['sale_date'] = getDate(result['sale_date'])
+        result = exchangeDate(result, 'sale_date')
 
-        if "subscription_date" in result:
-            result['subscription_date']=result['subscription_date'].strftime(DATE_FORMAT)
-                #.replace(tzinfo=NYC)
-
+        result = exchangeDate(result, 'subscription_date')
 
         print(result)
-        #pdfFiles.append(result)
+        exit()
+        # pdfFiles.append(result)
         with open(pathname + ".json", 'w') as file:
             file.write(json.dumps(result))
 
@@ -82,14 +107,10 @@ try:
             file.write(str(result['invoice_number']))
 
         with open(pathname + ".currency", 'w') as file:
-            currency=str(result['currency'])
-            currency=currency.replace("€", "EUR" )
-            currency=currency.replace("$", "USD" )
-            file.write(currency)
+            file.write(getCurrency(result['currency']))
 
 except FileNotFoundError:
     print(f'{argv[1]} not found')
 
 except TypeError as error:
     print(error)
-
