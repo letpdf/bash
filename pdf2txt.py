@@ -38,7 +38,7 @@ def getDate(input):
 
 def exchangeDate(array, key):
     if key in array:
-        print(type(array[key]))
+        #print(type(array[key]))
         if type(array[key]) is list:
             array[key] = array[key][0].strftime(DATE_FORMAT)
         else:
@@ -46,7 +46,7 @@ def exchangeDate(array, key):
     return array
 
 def getCurrency(input):
-    print(type(input))
+    #print(type(input))
     currency = str(input)
     currency = currency.replace("€", "EUR")
     currency = currency.replace("$", "USD")
@@ -91,8 +91,7 @@ try:
 
         result = exchangeDate(result, 'subscription_date')
 
-        print(result)
-        exit()
+        #print(result)
         # pdfFiles.append(result)
         with open(pathname + ".json", 'w') as file:
             file.write(json.dumps(result))
