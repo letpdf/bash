@@ -37,9 +37,14 @@ def getDate(input):
 
 
 def exchangeDate(array, key):
+    #print(type(array))
+    #print(array)
+    #print(key)
     if key in array:
         #print(type(array[key]))
         if type(array[key]) is list:
+            array[key] = array[key][0].strftime(DATE_FORMAT)
+        elif type(array[key]) is dict:
             array[key] = array[key][0].strftime(DATE_FORMAT)
         else:
             array[key] = array[key].strftime(DATE_FORMAT)
@@ -93,9 +98,12 @@ try:
             print('This PDF is currently not supported please make sure that you are using a orignal statment.')
             exit()
 
+        #print(result)
+
         # result['date']=result['date'].strftime(DATE_FORMAT)
         #result['date'] = getDate(result['date'])
         result = exchangeDate(result, 'date')
+
         #result['sale_date'] = getDate(result['sale_date'])
         result = exchangeDate(result, 'sale_date')
 
@@ -105,7 +113,7 @@ try:
 
         result['amount']=getPrice(result['amount'])
 
-        #print(result)
+        print(result)
         # pdfFiles.append(result)
         with open(pathname + ".json", 'w') as file:
             file.write(json.dumps(result))
