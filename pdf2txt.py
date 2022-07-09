@@ -45,9 +45,20 @@ def exchangeDate(array, key):
             array[key] = array[key].strftime(DATE_FORMAT)
     return array
 
-def getCurrency(input):
+
+def getPrice(input):
+    price = str(input)
     #print(type(input))
+    #print(input)
+    if type(input) is list:
+        price = str(input[0])
+    return price
+
+def getCurrency(input):
     currency = str(input)
+    #print(type(input))
+    if type(input) is list:
+        currency = str(input[1])
     currency = currency.replace("€", "EUR")
     currency = currency.replace("$", "USD")
     return currency
@@ -85,11 +96,14 @@ try:
         # result['date']=result['date'].strftime(DATE_FORMAT)
         #result['date'] = getDate(result['date'])
         result = exchangeDate(result, 'date')
-
         #result['sale_date'] = getDate(result['sale_date'])
         result = exchangeDate(result, 'sale_date')
 
         result = exchangeDate(result, 'subscription_date')
+
+        result['currency']=getCurrency(result['currency'])
+
+        result['amount']=getPrice(result['amount'])
 
         #print(result)
         # pdfFiles.append(result)
@@ -106,7 +120,7 @@ try:
             file.write(str(result['invoice_number']))
 
         with open(pathname + ".currency", 'w') as file:
-            file.write(getCurrency(result['currency']))
+            file.write(str(result['currency']))
 
 except FileNotFoundError:
     print(f'{argv[1]} not found')
