@@ -31,8 +31,10 @@ def currency_data_to_float(ammount):
 
 
 def getDate(input):
+    #print(input)
     if type(input) is list:
-        return input[0].strftime(DATE_FORMAT)
+        if input:
+            return input[0].strftime(DATE_FORMAT)
     return input.strftime(DATE_FORMAT)
 
 
@@ -42,28 +44,54 @@ def exchangeDate(array, key):
     #print(key)
     if key in array:
         #print(type(array[key]))
-        if type(array[key]) is list:
-            array[key] = array[key][0].strftime(DATE_FORMAT)
-        elif type(array[key]) is dict:
-            array[key] = array[key][0].strftime(DATE_FORMAT)
-        else:
-            array[key] = array[key].strftime(DATE_FORMAT)
+        if array[key]:
+            if type(array[key]) is list:
+                array[key] = array[key][0].strftime(DATE_FORMAT)
+            elif type(array[key]) is dict:
+                array[key] = array[key][0].strftime(DATE_FORMAT)
+            else:
+                array[key] = array[key].strftime(DATE_FORMAT)
     return array
 
+
+def exchangeInvoiceNumber(array, key):
+    #print(type(array))
+    #print(array)
+    #print(key)
+    if key in array:
+        #print(type(array[key]))
+        if array[key]:
+            if type(array[key]) is list:
+                array[key] = str(array[key][0])
+            elif type(array[key]) is dict:
+                array[key] = str(array[key][0])
+            else:
+                array[key] = str(array[key])
+    return array
+
+def getInvoiceNumber(input):
+    number = str(input)
+    #print(type(input))
+    #print(input)
+    if type(input) is list:
+        if input:
+            number = str(input[0])
+    return number
 
 def getPrice(input):
     price = str(input)
     #print(type(input))
     #print(input)
     if type(input) is list:
-        price = str(input[0])
+        if input:
+            price = str(input[-1])
     return price
 
 def getCurrency(input):
     currency = str(input)
     #print(type(input))
     if type(input) is list:
-        currency = str(input[1])
+        currency = str(input[-1])
     currency = currency.replace("€", "EUR")
     currency = currency.replace("$", "USD")
     return currency
@@ -108,6 +136,9 @@ try:
         result = exchangeDate(result, 'sale_date')
 
         result = exchangeDate(result, 'subscription_date')
+
+        result = exchangeInvoiceNumber(result, 'invoice_number')
+        #result['invoice_number']=getInvoiceNumber(result['invoice_number'])
 
         result['currency']=getCurrency(result['currency'])
 
