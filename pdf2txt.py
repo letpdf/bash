@@ -123,7 +123,8 @@ try:
 
         # if (not result):
         if (result == False):
-            print('This PDF is currently not supported please make sure that you are using a orignal statment.')
+            #print('PDF TEMPLATE not EXIST:',pathname)
+            #print('This PDF is currently not supported please make sure that you are using a orignal statment.')
             exit()
 
         #print(result)
