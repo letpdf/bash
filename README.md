@@ -1,5 +1,8 @@
 # bash bash.letpdf.com
 
+## included
+
++ templates
 + invoice
 + invoice_date
 + jpg2text
@@ -8,6 +11,25 @@
 + ocr_folder
 + pdf2jpg
 + pdf2txt
+
+## start
+
+clone project [letpdf/bash: bash.letpdf.com](https://github.com/letpdf/bash) 
+```bash
+git clone https://github.com/letpdf/bash.git
+```
+
+Prepare python environment
+```bash
+cd /media/tom/projects/letpdf/bash
+python3 -m pip install -r requirements.txt
+```
+
+import templates for invoices
+```bash
+git clone https://github.com/letpdf/templates.git
+```
+
 
 # Invoice2textdata
 PDFs are extremely difficult to scrape. Converting them to text files can make extracting their data significantly easier. I have focused on the widely used pdfminer package from python.
